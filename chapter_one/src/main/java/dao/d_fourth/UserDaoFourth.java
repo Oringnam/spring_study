@@ -1,6 +1,6 @@
-package Item1.d_fourth;
+package dao.d_fourth;
 
-import Item1.User;
+import dao.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import lombok.AllArgsConstructor;

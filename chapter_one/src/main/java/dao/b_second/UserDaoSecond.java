@@ -1,20 +1,21 @@
-package Item1.c_third;
+package dao.b_second;
 
-import Item1.User;
+import dao.User;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * abstract class 구성하여 서비스 제공 ( template / factory method pattern )
+ * 메소드 분리로 관심사 1차 분리
+ * ==> 메소드 추출 기법
  *
- * 단 자바 상속의 문제점을 그대로 가지고 있음
- * - 다중 상속이 안됨
- * - 상속 관계는 결합도가 커서, 다음 버전 릴리즈에 영향
- *
+ * 문제점..
+ * 다른 종류의 커넥션을 원하는 경우는? (예를 들면 mysql, mssql)
+ * ==> 클래스 분리가 필요 (third)
  */
-public abstract class UserDaoThird {
+public class UserDaoSecond {
     public void add(User user) throws ClassNotFoundException, SQLException {
 
         Connection connection = getConnection();
@@ -49,5 +50,15 @@ public abstract class UserDaoThird {
         return user;
     }
 
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+    /**
+     * add(), get() 양 메소드에서 사용되는 Connection 만들기를 추출하여 메소드 분리
+     * @return 완성된 Connection
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
+        return connection;
+    }
 }

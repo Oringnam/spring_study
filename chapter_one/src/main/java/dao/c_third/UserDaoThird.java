@@ -1,25 +1,23 @@
-package Item1.a_first;
+package dao.c_third;
 
-import Item1.User;
+import dao.User;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * DB를 사용하여 User 데이터의 조회 조작하는  클래스
- * 관점의 분리가 안되어 있음
+ * abstract class 구성하여 서비스 제공 ( template / factory method pattern )
  *
- * 세 가지 방법으로 관심 분리
- * 1. 메소드 분리
- * 2. 클래스 분리
- * 3. 인터페이스 구성
+ * 단 자바 상속의 문제점을 그대로 가지고 있음
+ * - 다중 상속이 안됨
+ * - 상속 관계는 결합도가 커서, 다음 버전 릴리즈에 영향
+ *
  */
-public class UserDaoFirst {
+public abstract class UserDaoThird {
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
+
+        Connection connection = getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
@@ -33,8 +31,7 @@ public class UserDaoFirst {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
+        Connection connection = getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
 
@@ -51,4 +48,6 @@ public class UserDaoFirst {
 
         return user;
     }
+
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 }

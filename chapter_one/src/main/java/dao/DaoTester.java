@@ -1,6 +1,6 @@
-package Item1;
+package dao;
 
-import Item1.a_first.UserDaoFirst;
+import dao.a_first.UserDaoFirst;
 import java.sql.SQLException;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package Item1;
+package dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,14 +1,11 @@
-package Item1.c_third;
+package dao.d_fourth;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * mysql 연동 UserDao
- */
-public class MySqlUserDao extends UserDaoThird {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
+public class MySqlConnectionMaker implements ConnectionMaker {
+    public Connection makeConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
         return connection;

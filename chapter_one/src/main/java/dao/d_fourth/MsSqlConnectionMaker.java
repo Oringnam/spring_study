@@ -1,14 +1,11 @@
-package Item1.c_third;
+package dao.d_fourth;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * mssql 연동 UserDao
- */
-public class MsSqlUserDao extends UserDaoThird {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
+public class MsSqlConnectionMaker implements ConnectionMaker {
+    public Connection makeConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost", "spring", "book");
         return connection;

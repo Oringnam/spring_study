@@ -1,6 +1,6 @@
-package Item1.b_second;
+package dao.a_first;
 
-import Item1.User;
+import dao.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,17 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 메소드 분리로 관심사 1차 분리
- * ==> 메소드 추출 기법
+ * DB를 사용하여 User 데이터의 조회 조작하는  클래스
+ * 관점의 분리가 안되어 있음
  *
- * 문제점..
- * 다른 종류의 커넥션을 원하는 경우는? (예를 들면 mysql, mssql)
- * ==> 클래스 분리가 필요 (third)
+ * 세 가지 방법으로 관심 분리
+ * 1. 메소드 분리
+ * 2. 클래스 분리
+ * 3. 인터페이스 구성
  */
-public class UserDaoSecond {
+public class UserDaoFirst {
     public void add(User user) throws ClassNotFoundException, SQLException {
-
-        Connection connection = getConnection();
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
@@ -32,7 +33,8 @@ public class UserDaoSecond {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection connection = getConnection();
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
 
@@ -48,17 +50,5 @@ public class UserDaoSecond {
         connection.close();
 
         return user;
-    }
-
-    /**
-     * add(), get() 양 메소드에서 사용되는 Connection 만들기를 추출하여 메소드 분리
-     * @return 완성된 Connection
-     * @throws ClassNotFoundException
-     * @throws SQLException
-     */
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
-        return connection;
     }
 }
