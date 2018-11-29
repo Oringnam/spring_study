@@ -26,6 +26,14 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.6</version>
             </dependency>
+
+
+            <!-- test scope 제거 // main에서 테스트 진행 -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
