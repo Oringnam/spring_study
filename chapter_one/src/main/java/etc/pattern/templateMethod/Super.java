@@ -2,6 +2,10 @@ package etc.pattern.templateMethod;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * TemplateMethodPattern
+ * 기본적인 골격을 잡아두고 필요한 부분만 유연하게 변경하여 사용할 수 있는 패턴
+ */
 @Slf4j
 public abstract class Super {
     public void templateMethod() {
